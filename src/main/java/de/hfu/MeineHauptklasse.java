@@ -18,20 +18,13 @@ public class MeineHauptklasse {
 	 **/
 	public static void main(String[] args) {
 		
-		/**
-		 * Hier wird der Scanner initialisiert 
-		 **/
+
 		Scanner eingabewert = new Scanner(System.in);
 		
-		/**
-		 *  Auslesen der Scanner Eingabe 
-		 **/
-		String value= eingabewert.nextLine();
-		
-		/**
-		 *  Ausgabe in Großbuchstaben
-		 **/
-		System.out.println(value.toUpperCase());
+		System.out.println("Geben sie eine Zeichenkette ein");
+		String value= eingabewert.next();
+		String großbuchstaben= value.toUpperCase();
+		System.out.println(großbuchstaben);
 
 	}
 
