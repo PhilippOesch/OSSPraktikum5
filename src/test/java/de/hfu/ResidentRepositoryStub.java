@@ -1,4 +1,4 @@
-package de.hfu.residents.repository;
+package de.hfu;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import de.hfu.residents.domain.Resident;
+import de.hfu.residents.repository.ResidentRepository;
 import de.hfu.residents.service.BaseResidentService;
 import de.hfu.residents.service.ResidentService;
 

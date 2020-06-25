@@ -12,7 +12,6 @@ import org.junit.Test;
 
 import de.hfu.residents.domain.Resident;
 import de.hfu.residents.repository.ResidentRepository;
-import de.hfu.residents.repository.ResidentRepositoryStub;
 import de.hfu.residents.service.BaseResidentService;
 import de.hfu.residents.service.ResidentService;
 import de.hfu.residents.service.ResidentServiceException;
@@ -49,10 +48,13 @@ public class ResidentServiceTest {
 		String expectedFamilyName= "Oeschger";
 		String expectedName2= "Philipp";
 		String expectedCit3= "Furtwangen";
+		//String expectedStreet= "Bregstraße";
 		
 		assertEquals(expectedFamilyName, this.residentService.getFilteredResidentsList(filterresident).get(0).getFamilyName());
 		assertEquals(expectedName2, this.residentService.getFilteredResidentsList(filterresident2).get(0).getGivenName());
 		assertEquals(expectedCit3, this.residentService.getFilteredResidentsList(filterresident3).get(0).getCity());
+		//assertEquals(expectedStreet, this.residentService.getFilteredResidentsList(filterresident3).get(0).getStreet());
+		//assertEquals(new Date(date.getTimeInMillis()), this.residentService.getFilteredResidentsList(filterresident3).get(0).getDateOfBirth());
 	}
 	
 	//Testen eines Filters mit Wildcard und mehr als einem Ergebnis
@@ -60,11 +62,17 @@ public class ResidentServiceTest {
 	public void test2(){
 		Resident filterresident1= new Resident("*", "T*", "*", "*", new Date(date.getTimeInMillis()));
 		Resident filterresident2= new Resident("*", "*", "*", "*", new Date(date.getTimeInMillis()));
+		Resident filterresident3= new Resident("Test", "*", "Test", "Test", new Date(date.getTimeInMillis()));
+		Resident filterresident4= new Resident("*", "Test", "Test", "Test", new Date(date.getTimeInMillis()));
 		int expectedsize1= 2;
 		int expectedsize2= 4;
+		int expectedsize3= 1;
+		int expectedsize4= 1;
 		
 		assertEquals(expectedsize1, this.residentService.getFilteredResidentsList(filterresident1).size());
 		assertEquals(expectedsize2, this.residentService.getFilteredResidentsList(filterresident2).size());
+		assertEquals(expectedsize3, this.residentService.getFilteredResidentsList(filterresident3).size());
+		assertEquals(expectedsize4, this.residentService.getFilteredResidentsList(filterresident4).size());
 	}
 	
 	//Testen eines nicht vorkommenden Filters
@@ -90,12 +98,9 @@ public class ResidentServiceTest {
 	//Nicht erlauben von Wildcards
 	@Test(expected=ResidentServiceException.class, timeout=1000) 
 	public void test5() throws ResidentServiceException{
-		Resident filterresident= new Resident("Max", "Mustermann", "*", "Bielefeld", new Date(2000000));
-		Resident filterresident2= new Resident("Max", "Mustermann", "*", "Bielefeld*", new Date(2000000));
-		String expectedCity= "Bielefeld";
-		
-		this.residentService.getUniqueResident(filterresident);
-		this.residentService.getUniqueResident(filterresident2);
+		Resident filterresident4= new Resident("*", "*", "*", "Bielefeld*", new Date(2000000));
+
+		this.residentService.getUniqueResident(filterresident4);
 	}
 	
 	//kein eindeutiges Ergebnis
